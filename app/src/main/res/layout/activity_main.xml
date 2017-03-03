@@ -10,8 +10,30 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.m2dl.mobe.miniprojetandroid.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:text="Ma fac"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/mafac"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp" />
+
+    <Button
+        android:text="Mes cours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:id="@+id/mescours"
+        android:layout_below="@+id/mafac"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Configurations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:id="@+id/config"
+        android:layout_below="@+id/mescours"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
