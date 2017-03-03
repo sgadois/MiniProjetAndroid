@@ -50,7 +50,19 @@ public class MainActivity extends AppCompatActivity {
                //TODO config intent
             }
         });
+        Button quitter = (Button) findViewById(R.id.close);
+        quitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
 
     }
 }
