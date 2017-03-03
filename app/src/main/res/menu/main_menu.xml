@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/fac"
+        android:title="@string/fac">
+        <menu>
+            <item android:id="@+id/geoloc"
+                android:title="@string/geoloc"/>
+            <item android:id="@+id/occupRU"
+                android:title="@string/occupRU"/>
+            <item android:id="@+id/anomalie"
+                android:title="@string/anomalie"/>
+        </menu>
+    </item>
+    <item android:id="@+id/cours"
+        android:title="@string/cours">
+        <menu>
+            <item android:id="@+id/schedule"
+                android:title="@string/schedule"/>
+            <item android:id="@+id/infos"
+                android:title="@string/infos"/>
+        </menu>
+    </item>
+    <item android:id="@+id/config"
+        android:title="@string/config" />
+</menu>

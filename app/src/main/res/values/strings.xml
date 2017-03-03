@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MiniProjetAndroid</string>
+    <string name="fac">Ma Fac</string>
+    <string name="cours">Mes Cours</string>
+    <string name="config">Configuration</string>
+    <string name="geoloc">Géolocalisation</string>
+    <string name="occupRU">Occuparations des RUs</string>
+    <string name="anomalie">Détection des anomalies</string>
+    <string name="schedule">Emplois du temps</string>
+    <string name="infos">Informations</string>
 </resources>

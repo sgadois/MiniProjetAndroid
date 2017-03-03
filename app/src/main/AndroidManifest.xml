@@ -17,11 +17,20 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".geolocalisation.GeolocalisationActivity" >
+
+        <activity
+            android:name=".geolocalisation.GeolocalisationActivity" >
+        </activity>
+        <activity
+            android:name=".emploidutemps.ScheduleActivity"
+            android:label="@string/schedule" >
+        </activity>
+        <activity
+            android:name=".occupationru.OccupationActivity"
+            android:label="@string/occupRU" >
         </activity>
     </application>
 

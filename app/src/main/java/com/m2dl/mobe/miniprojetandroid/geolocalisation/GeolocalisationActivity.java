@@ -2,7 +2,6 @@ package com.m2dl.mobe.miniprojetandroid.geolocalisation;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.m2dl.mobe.miniprojetandroid.R;
@@ -54,18 +53,13 @@ public class GeolocalisationActivity extends Activity {
         myMap = (MapView) findViewById(R.id.map);
         centerOnMe = (Button) findViewById(R.id.button_center_on_me);
 
-        centerOnMe.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (mLocationOverlay.getMyLocation() != null){
-                    mapController.setCenter(mLocationOverlay.getMyLocation());
-                    mapController.setZoom(19);
-                }
-            }
-        });
-
         initialiseMap();
         initialiseMyPosition();
         initialiseDonnees();
+
+        centerOnMe.setOnClickListener(new CenterOnMeListener(mLocationOverlay,
+                                                                mapController,
+                                                                getApplicationContext()));
     }
 
     public void onResume() {

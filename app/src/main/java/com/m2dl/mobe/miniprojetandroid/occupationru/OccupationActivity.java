@@ -16,8 +16,7 @@ public class OccupationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         oru = new OccupationRU();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.occupation_main);
         oru.makeGraph(this);
-
     }
 }
