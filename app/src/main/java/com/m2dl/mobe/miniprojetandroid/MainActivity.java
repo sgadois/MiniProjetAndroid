@@ -7,15 +7,11 @@ import android.os.Bundle;
 import com.m2dl.mobe.miniprojetandroid.occupationru.OccupationRU;
 
 public class MainActivity extends AppCompatActivity {
-    OccupationRU oru;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        oru = new OccupationRU();
         setContentView(R.layout.activity_main);
-        oru.makeGraph(this);
-
     }
 
 

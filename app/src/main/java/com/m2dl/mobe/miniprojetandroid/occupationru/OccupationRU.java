@@ -1,5 +1,7 @@
 package com.m2dl.mobe.miniprojetandroid.occupationru;
 
+import android.support.v7.app.AppCompatActivity;
+
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
@@ -65,7 +67,7 @@ public class OccupationRU {
 
     }
 
-    public void makeGraph(MainActivity ma){
+    public void makeGraph(AppCompatActivity ma){
 
         hoursDateFormat = new SimpleDateFormat("HH:mm");
 
