@@ -1,7 +1,6 @@
 package com.m2dl.mobe.miniprojetandroid.geolocalisation;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,21 +25,30 @@ import java.util.ArrayList;
 
 public class GeolocalisationActivity extends Activity {
 
+    /**
+     * La map.
+     */
     private MapView myMap;
 
+    /**
+     *  Le bouton de recentrage sur la position de l'utilisateur.
+     */
     private Button centerOnMe;
 
+    /**
+     *  Le controller de la map.
+     */
     private IMapController mapController;
 
+    /**
+     *  L'overlay de la position de l'utilisateur.
+     */
     private MyLocationNewOverlay mLocationOverlay;
 
-
-    private ArrayList<OverlayItem> items;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Context context = getApplicationContext();
         setContentView(R.layout.activity_geolocalisation);
 
         myMap = (MapView) findViewById(R.id.map);
@@ -55,6 +63,19 @@ public class GeolocalisationActivity extends Activity {
             }
         });
 
+        initialiseMap();
+        initialiseMyPosition();
+        initialiseDonnees();
+    }
+
+    public void onResume() {
+        super.onResume();
+    }
+
+    /**
+     * Permet d'initialiser la configuration de la map.
+     */
+    private void initialiseMap() {
         myMap.setTileSource(TileSourceFactory.MAPNIK);
 
         myMap.setBuiltInZoomControls(true);
@@ -66,16 +87,26 @@ public class GeolocalisationActivity extends Activity {
 
         GeoPoint startPoint = new GeoPoint(43.562547, 1.468853);
         mapController.setCenter(startPoint);
-        mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(context), myMap);
+    }
+
+    /**
+     * Permet d'initialiser le curseur de position.
+     */
+    private void initialiseMyPosition() {
+        mLocationOverlay =
+                new MyLocationNewOverlay(new GpsMyLocationProvider(getApplicationContext()), myMap);
         mLocationOverlay.enableMyLocation();
         myMap.getOverlays().add(mLocationOverlay);
+    }
 
-        //your items
-        items = new ArrayList<OverlayItem>();
-        items.add(new OverlayItem("RU2", "Restaurant universitaire 2", new GeoPoint(43.560978, 1.471735))); // Lat/Lon decimal degrees
-        items.add(new OverlayItem("RU1", "Restaurant universitaire 1", new GeoPoint(43.562254, 1.463346))); // Lat/Lon decimal degrees
+    /**
+     * Permet de placer les données de la BD sur la map.
+     */
+    private void initialiseDonnees() {
+        ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+        items.add(new OverlayItem("RU2", "Restaurant universitaire 2", new GeoPoint(43.560978, 1.471735)));
+        items.add(new OverlayItem("RU1", "Restaurant universitaire 1", new GeoPoint(43.562254, 1.463346)));
 
-        //the overlay
         ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     @Override
@@ -88,13 +119,9 @@ public class GeolocalisationActivity extends Activity {
                     public boolean onItemLongPress(final int index, final OverlayItem item) {
                         return false;
                     }
-                }, context);
+                }, getApplicationContext());
         mOverlay.setFocusItemsOnTap(true);
 
         myMap.getOverlays().add(mOverlay);
-    }
-
-    public void onResume() {
-        super.onResume();
     }
 }
