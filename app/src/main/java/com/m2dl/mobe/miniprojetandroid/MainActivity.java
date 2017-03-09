@@ -1,7 +1,6 @@
 package com.m2dl.mobe.miniprojetandroid;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.view.MenuItem;
 import com.m2dl.mobe.miniprojetandroid.emploidutemps.ScheduleActivity;
 import com.m2dl.mobe.miniprojetandroid.geolocalisation.GeolocalisationActivity;
 import com.m2dl.mobe.miniprojetandroid.occupationru.OccupationActivity;
-import com.m2dl.mobe.miniprojetandroid.occupationru.OccupationRU;
 
 
 public class MainActivity extends AppCompatActivity {

@@ -2,9 +2,16 @@ package com.m2dl.mobe.miniprojetandroid.geolocalisation;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.m2dl.mobe.miniprojetandroid.R;
+import com.m2dl.mobe.miniprojetandroid.models.Batiment;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -23,6 +30,11 @@ import java.util.ArrayList;
  */
 
 public class GeolocalisationActivity extends Activity {
+
+    /**
+     * Tag de la classe.
+     */
+    private static final String TAG = "GeolocalisationActivity";
 
     /**
      * La map.
@@ -44,6 +56,11 @@ public class GeolocalisationActivity extends Activity {
      */
     private MyLocationNewOverlay mLocationOverlay;
 
+    /**
+     * La liste des items à afficher sur la map.
+     */
+    private ArrayList<OverlayItem> items;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,10 +69,11 @@ public class GeolocalisationActivity extends Activity {
 
         myMap = (MapView) findViewById(R.id.map);
         centerOnMe = (Button) findViewById(R.id.button_center_on_me);
+        items = new ArrayList<OverlayItem>();
 
         initialiseMap();
         initialiseMyPosition();
-        initialiseDonnees();
+        retrieveDonnees();
 
         centerOnMe.setOnClickListener(new CenterOnMeListener(mLocationOverlay,
                                                                 mapController,
@@ -94,13 +112,35 @@ public class GeolocalisationActivity extends Activity {
     }
 
     /**
-     * Permet de placer les données de la BD sur la map.
+     * Permet de récupérer les données de la BD.
      */
-    private void initialiseDonnees() {
-        ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-        items.add(new OverlayItem("RU2", "Restaurant universitaire 2", new GeoPoint(43.560978, 1.471735)));
-        items.add(new OverlayItem("RU1", "Restaurant universitaire 1", new GeoPoint(43.562254, 1.463346)));
+    private void retrieveDonnees() {
+        final DatabaseReference database = FirebaseDatabase.getInstance().getReference("batiments");
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot batimentSnapshot : dataSnapshot.getChildren()) {
+                    Batiment bat = batimentSnapshot.getValue(Batiment.class);
+                    items.add(new OverlayItem(bat.getNom(),
+                                bat.getDescription(),
+                                new GeoPoint(bat.getLatitude(),
+                                                bat.getLongitude())));
+                }
+                addItemsToMap();
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadBatiment:onCancelled", databaseError.toException());
+            }
+        };
+        database.addListenerForSingleValueEvent(postListener);
+    }
+
+    /**
+     * Ajoute les items récupérer de la BD sur la map.
+     */
+    public void addItemsToMap() {
         ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     @Override
@@ -115,7 +155,6 @@ public class GeolocalisationActivity extends Activity {
                     }
                 }, getApplicationContext());
         mOverlay.setFocusItemsOnTap(true);
-
         myMap.getOverlays().add(mOverlay);
     }
 }
