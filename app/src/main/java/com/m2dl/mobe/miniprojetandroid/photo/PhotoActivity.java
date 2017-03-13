@@ -17,7 +17,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.m2dl.mobe.miniprojetandroid.R;
+import com.m2dl.mobe.miniprojetandroid.login.Login;
 
 import java.io.File;
 
@@ -47,8 +50,12 @@ public class PhotoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Uri file = Uri.fromFile(new File(imageUri.getPath()));
-                //StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());
-                //riversRef.putFile(file);
+                Login.getInstance().signIn("sgadois@gmail.com", "azerty", PhotoActivity.this);
+
+                // Create a storage reference from our app
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+                StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());
+                riversRef.putFile(file);
             }
         });
 
