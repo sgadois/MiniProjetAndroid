@@ -3,13 +3,24 @@
      android:layout_width="match_parent"
     android:screenOrientation="landscape"
     android:configChanges="orientation|keyboardHidden"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+
+    <Spinner
+        android:layout_width="118dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:entries="@string/about"
+        android:spinnerMode="dropdown" />
 
     <com.jjoe64.graphview.GraphView
-        android:layout_width="match_parent"
-        android:layout_height="200dip"
+        android:layout_width="333dp"
+        android:layout_height="match_parent"
         android:id="@+id/graph"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_weight="0.92" />
+
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.m2dl.mobe.miniprojetandroid.occupationru;
+package com.m2dl.mobe.miniprojetandroid.models;
 
 import java.util.Date;
 
