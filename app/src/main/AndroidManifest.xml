@@ -32,6 +32,10 @@
             android:name=".occupationru.OccupationActivity"
             android:label="@string/occupRU" >
         </activity>
+        <activity
+            android:name=".photo.PhotoActivity"
+            android:label="@string/anomalie" >
+        </activity>
     </application>
 
 </manifest>

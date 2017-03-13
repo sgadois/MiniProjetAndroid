@@ -8,4 +8,10 @@
     <string name="anomalie">Détection des anomalies</string>
     <string name="schedule">Emplois du temps</string>
     <string name="infos">Informations</string>
+
+    <string-array name="criticite">
+        <item>Confort</item>
+        <item>Problème</item>
+        <item>Danger</item>
+    </string-array>
 </resources>
