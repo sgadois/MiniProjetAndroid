@@ -39,6 +39,7 @@ public class PhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
 
+        // Initialisation des boutons.
         Button btnTakePhoto = (Button) findViewById(R.id.buttonPhoto);
         Button btnUploadPhoto = (Button) findViewById(R.id.uploadPhoto);
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
@@ -59,13 +60,11 @@ public class PhotoActivity extends AppCompatActivity {
             }
         });
 
+        // Initialisation du Spinner.
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.criticite, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
     }
 
@@ -84,8 +83,6 @@ public class PhotoActivity extends AppCompatActivity {
                         bitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, selectedImage);
 
                         imageView.setImageBitmap(bitmap);
-                        //Affichage de l'infobulle
-                        Toast.makeText(this, selectedImage.toString(), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
                         Log.e("Camera", e.toString());
@@ -94,6 +91,9 @@ public class PhotoActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Permet de lancer un intent avec result de prise de photo.
+     */
     public void takePhoto() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         String photoName = "Pic_" +

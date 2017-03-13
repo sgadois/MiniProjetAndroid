@@ -21,12 +21,24 @@ public class Login {
      */
     private static final String TAG = "GeolocalisationActivity";
 
+    /**
+     * Instance de la classe d'authentification de firebase.
+     */
     private static FirebaseAuth mAuth;
 
+    /**
+     * Listener d'authentification.
+     */
     private static FirebaseAuth.AuthStateListener mAuthListener;
 
-    public static Login instance;
+    /**
+     * Instance de la classe Login.
+     */
+    private static Login instance = null;
 
+    /**
+     * Constructeur.
+     */
     private Login() {
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -44,7 +56,13 @@ public class Login {
         };
     }
 
-    public static void signIn(String email, String password, Activity activity) {
+    /**
+     * Permet de s'authentifier à firebase.
+     * @param email L'email de l'utilisateur.
+     * @param password Le mot de passe de l'utilisateur.
+     * @param activity L'Activity dans lequel la méthode est utilisée.
+     */
+    public void signIn(String email, String password, Activity activity) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -61,6 +79,10 @@ public class Login {
                 });
     }
 
+    /**
+     * Récupération du singleton.
+     * @return Login
+     */
     public static Login getInstance() {
         if(instance == null) {
             instance = new Login();
