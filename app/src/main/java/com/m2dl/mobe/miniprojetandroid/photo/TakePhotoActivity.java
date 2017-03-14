@@ -10,15 +10,20 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.m2dl.mobe.miniprojetandroid.R;
+import com.m2dl.mobe.miniprojetandroid.login.Login;
 
 import java.io.File;
 
@@ -36,19 +41,9 @@ public class TakePhotoActivity extends AppCompatActivity {
     private Uri imageUri;
 
     /**
-     * Bouton d'upload.
+     * La criticité de l'image.
      */
-    Button btnUploadPhoto;
-
-    /**
-     * Listener du bouton d'upload.
-     */
-    private UploadImageListener uploadImageListener;
-
-    /**
-     * Le spinner du choix de criticité.
-     */
-    Spinner spinner;
+    private String criticite;
 
 
     @Override
@@ -56,26 +51,21 @@ public class TakePhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
 
-        // Initialisation du bouton d'upload.
-        this.btnUploadPhoto = (Button) findViewById(R.id.uploadPhoto);
-        this.uploadImageListener = new UploadImageListener(this);
-        this.btnUploadPhoto.setOnClickListener(this.uploadImageListener);
-
         // Initialisation du Spinner.
-        this.spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.criticite, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.spinner.setAdapter(adapter);
-        this.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                uploadImageListener.setCriticite(adapter.getItem(position).toString());
+                criticite = adapter.getItem(position).toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // Nothing to do
+                // Nothing to do.
             }
         });
 
@@ -104,6 +94,24 @@ public class TakePhotoActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_upload, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_upload:
+                uploadPhoto();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     /**
      * Permet de lancer un intent de prise de photo avec result .
      */
@@ -116,8 +124,17 @@ public class TakePhotoActivity extends AppCompatActivity {
 
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
         this.imageUri = Uri.fromFile(photo);
-        this.uploadImageListener.setImageUri(this.imageUri);
 
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
+    public void uploadPhoto() {
+        Uri file = Uri.fromFile(new File(this.imageUri.getPath()));
+        Login.getInstance().signIn("sgadois@gmail.com", "azerty", this);
+
+        // Create a storage reference from our app
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());
+        riversRef.putFile(file);
     }
 }

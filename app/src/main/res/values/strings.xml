@@ -11,6 +11,8 @@
 
     <string name="action_photo">Prendre photo</string>
 
+    <string name="action_upload">Upload photo</string>
+
     <string-array name="criticite">
         <item>Confort</item>
         <item>Problème</item>
