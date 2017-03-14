@@ -11,16 +11,14 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.m2dl.mobe.miniprojetandroid.R;
-import com.m2dl.mobe.miniprojetandroid.login.Login;
 
 import java.io.File;
 
@@ -28,44 +26,60 @@ import java.io.File;
  * Created by seb on 09/03/17.
  */
 
-public class PhotoActivity extends AppCompatActivity {
+public class TakePhotoActivity extends AppCompatActivity {
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
+    /**
+     * Uri de la photo prise.
+     */
     private Uri imageUri;
+
+    /**
+     * Bouton d'upload.
+     */
+    Button btnUploadPhoto;
+
+    /**
+     * Listener du bouton d'upload.
+     */
+    private UploadImageListener uploadImageListener;
+
+    /**
+     * Le spinner du choix de criticité.
+     */
+    Spinner spinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
 
-        // Initialisation des boutons.
-        Button btnTakePhoto = (Button) findViewById(R.id.buttonPhoto);
-        Button btnUploadPhoto = (Button) findViewById(R.id.uploadPhoto);
-        btnTakePhoto.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                takePhoto();
-            }
-        });
-        btnUploadPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri file = Uri.fromFile(new File(imageUri.getPath()));
-                Login.getInstance().signIn("sgadois@gmail.com", "azerty", PhotoActivity.this);
-
-                // Create a storage reference from our app
-                StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-                StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());
-                riversRef.putFile(file);
-            }
-        });
+        // Initialisation du bouton d'upload.
+        this.btnUploadPhoto = (Button) findViewById(R.id.uploadPhoto);
+        this.uploadImageListener = new UploadImageListener(this);
+        this.btnUploadPhoto.setOnClickListener(this.uploadImageListener);
 
         // Initialisation du Spinner.
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        this.spinner = (Spinner) findViewById(R.id.spinner);
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.criticite, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        this.spinner.setAdapter(adapter);
+        this.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                uploadImageListener.setCriticite(adapter.getItem(position).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Nothing to do
+            }
+        });
+
+        this.takePhoto();
     }
 
     @Override
@@ -81,7 +95,6 @@ public class PhotoActivity extends AppCompatActivity {
                     Bitmap bitmap;
                     try {
                         bitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, selectedImage);
-
                         imageView.setImageBitmap(bitmap);
                     } catch (Exception e) {
                         Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
@@ -92,7 +105,7 @@ public class PhotoActivity extends AppCompatActivity {
     }
 
     /**
-     * Permet de lancer un intent avec result de prise de photo.
+     * Permet de lancer un intent de prise de photo avec result .
      */
     public void takePhoto() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
@@ -102,7 +115,8 @@ public class PhotoActivity extends AppCompatActivity {
         File photo = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), photoName);
 
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
-        imageUri = Uri.fromFile(photo);
+        this.imageUri = Uri.fromFile(photo);
+        this.uploadImageListener.setImageUri(this.imageUri);
 
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }

@@ -33,7 +33,11 @@
             android:label="@string/occupRU" >
         </activity>
         <activity
-            android:name=".photo.PhotoActivity"
+            android:name=".photo.TakePhotoActivity"
+            android:label="@string/anomalie" >
+        </activity>
+        <activity
+            android:name=".photo.PhotosActivity"
             android:label="@string/anomalie" >
         </activity>
     </application>

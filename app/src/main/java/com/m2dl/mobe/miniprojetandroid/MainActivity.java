@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import com.m2dl.mobe.miniprojetandroid.emploidutemps.ScheduleActivity;
 import com.m2dl.mobe.miniprojetandroid.geolocalisation.GeolocalisationActivity;
 import com.m2dl.mobe.miniprojetandroid.occupationru.OccupationActivity;
-import com.m2dl.mobe.miniprojetandroid.photo.PhotoActivity;
+import com.m2dl.mobe.miniprojetandroid.photo.PhotosActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, OccupationActivity.class));
                 return true;
             case R.id.anomalie:
-                startActivity(new Intent(this, PhotoActivity.class));
+                startActivity(new Intent(this, PhotosActivity.class));
                 return true;
             case R.id.schedule:
                 startActivity(new Intent(this, ScheduleActivity.class));

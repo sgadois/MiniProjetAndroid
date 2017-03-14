@@ -19,7 +19,7 @@ public class Login {
     /**
      * Tag de la classe.
      */
-    private static final String TAG = "GeolocalisationActivity";
+    private static final String TAG = "Login";
 
     /**
      * Instance de la classe d'authentification de firebase.

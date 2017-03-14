@@ -9,6 +9,8 @@
     <string name="schedule">Emplois du temps</string>
     <string name="infos">Informations</string>
 
+    <string name="action_photo">Prendre photo</string>
+
     <string-array name="criticite">
         <item>Confort</item>
         <item>Problème</item>
