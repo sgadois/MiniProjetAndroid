@@ -3,6 +3,8 @@
     <item android:id="@+id/fac"
         android:title="@string/fac">
         <menu>
+            <item android:title="QrCode"
+                android:id="@+id/qrcode"/>
             <item android:id="@+id/geoloc"
                 android:title="@string/geoloc"/>
             <item android:id="@+id/occupRU"

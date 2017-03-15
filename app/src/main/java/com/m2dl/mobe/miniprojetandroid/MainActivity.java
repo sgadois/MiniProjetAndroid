@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.m2dl.mobe.miniprojetandroid.emploidutemps.ScheduleActivity;
 import com.m2dl.mobe.miniprojetandroid.geolocalisation.GeolocalisationActivity;
 import com.m2dl.mobe.miniprojetandroid.occupationru.OccupationActivity;
+import com.m2dl.mobe.miniprojetandroid.qrcode.Qrcodescanner;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.schedule:
                 startActivity(new Intent(this, ScheduleActivity.class));
+                return true;
+            case R.id.qrcode:
+                startActivity(new Intent(this, Qrcodescanner.class));
                 return true;
             case R.id.config:
                 //TODO
