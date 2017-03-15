@@ -14,7 +14,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -31,6 +33,14 @@
         <activity
             android:name=".occupationru.OccupationActivity"
             android:label="@string/occupRU" >
+        </activity>
+        <activity
+            android:name=".photo.VisualizePhotoActivity"
+            android:label="@string/anomalie" >
+        </activity>
+        <activity
+            android:name=".photo.PhotosActivity"
+            android:label="@string/anomalie" >
         </activity>
     </application>
 
