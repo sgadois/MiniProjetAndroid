@@ -80,6 +80,14 @@ public class Login {
     }
 
     /**
+     * Récupère l'id de l'utilisateur courant.
+     * @return String l'id.
+     */
+    public String getTokenId() {
+        return mAuth.getCurrentUser().getUid();
+    }
+
+    /**
      * Récupération du singleton.
      * @return Login
      */
