@@ -1,13 +1,8 @@
 package com.m2dl.mobe.miniprojetandroid.photo;
 
-import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -31,25 +26,37 @@ import java.io.File;
  * Created by seb on 09/03/17.
  */
 
-public class TakePhotoActivity extends AppCompatActivity {
-
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-
-    /**
-     * Uri de la photo prise.
-     */
-    private Uri imageUri;
+public class VisualizePhotoActivity extends AppCompatActivity {
 
     /**
      * La criticité de l'image.
      */
     private String criticite;
 
+    /**
+     * Uri de la photo visualisé.
+     */
+    private Uri imageUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
+
+        // Récupération de l'intent extra.
+        String extra = getIntent().getStringExtra("imageUri");
+        if(extra != null) {
+            this.imageUri = Uri.parse(getIntent().getStringExtra("imageUri"));
+            ImageView imageView = (ImageView) findViewById(R.id.imagePhoto);
+            try {
+                Bitmap bitmap = android.provider.MediaStore.Images.Media.getBitmap(getContentResolver(), this.imageUri);
+                imageView.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
+                Log.e("Camera", e.toString());
+            }
+        }
 
         // Initialisation du Spinner.
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -68,31 +75,9 @@ public class TakePhotoActivity extends AppCompatActivity {
                 // Nothing to do.
             }
         });
-
-        this.takePhoto();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
-                if(resultCode == Activity.RESULT_OK) {
-                    Uri selectedImage = imageUri;
-                    getContentResolver().notifyChange(selectedImage, null);
-                    ImageView imageView = (ImageView) findViewById(R.id.imagePhoto);
-                    ContentResolver cr = getContentResolver();
-                    Bitmap bitmap;
-                    try {
-                        bitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, selectedImage);
-                        imageView.setImageBitmap(bitmap);
-                    } catch (Exception e) {
-                        Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
-                        Log.e("Camera", e.toString());
-                    }
-                }
-        }
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,22 +95,6 @@ public class TakePhotoActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    /**
-     * Permet de lancer un intent de prise de photo avec result .
-     */
-    public void takePhoto() {
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        String photoName = "Pic_" +
-                            getExternalFilesDir(Environment.DIRECTORY_PICTURES).listFiles().length +
-                            ".jpg";
-        File photo = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), photoName);
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
-        this.imageUri = Uri.fromFile(photo);
-
-        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     public void uploadPhoto() {
