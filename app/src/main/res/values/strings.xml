@@ -1,5 +1,10 @@
 <resources>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="app_name">MiniProjetAndroid</string>
+    <string name="menu">Menu</string>
     <string name="fac">Ma Fac</string>
     <string name="cours">Mes Cours</string>
     <string name="config">Configuration</string>
@@ -8,4 +13,20 @@
     <string name="anomalie">Détection des anomalies</string>
     <string name="schedule">Emplois du temps</string>
     <string name="infos">Informations</string>
+
+    <string name="action_photo">Prendre photo</string>
+
+    <string name="action_upload">Upload photo</string>
+
+    <string-array name="criticite">
+        <item>Confort</item>
+        <item>Problème</item>
+        <item>Danger</item>
+    </string-array>
+
+    <string-array name="menu">
+        <item>Ma Fac</item>
+        <item>Mes Cours</item>
+        <item>Configuration</item>
+    </string-array>
 </resources>
