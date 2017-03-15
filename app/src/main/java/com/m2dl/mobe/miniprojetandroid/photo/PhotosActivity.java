@@ -17,6 +17,7 @@ import android.widget.GridView;
 import com.m2dl.mobe.miniprojetandroid.R;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * Created by seb on 14/03/17.
@@ -46,7 +47,7 @@ public class PhotosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_photos);
 
         // Initialisation de la gridview.
-        this.photoAdapter = new PhotoAdapter(this);
+        this.photoAdapter = new PhotoAdapter(this, Arrays.asList(getExternalFilesDir(Environment.DIRECTORY_PICTURES).listFiles()));
         this.gridview = (GridView) findViewById(R.id.grid_photos);
         this.gridview.setAdapter(this.photoAdapter);
 
@@ -62,8 +63,6 @@ public class PhotosActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        this.photoAdapter.notifyDataSetChanged();
-        this.gridview.setAdapter(this.photoAdapter);
     }
 
     @Override
@@ -90,6 +89,7 @@ public class PhotosActivity extends AppCompatActivity {
         switch(requestCode) {
             case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
                 if(resultCode == Activity.RESULT_OK) {
+                    photoAdapter.addItem(new File(imageUri.getPath()));
                     visualizePhoto();
                 }
         }
@@ -116,10 +116,7 @@ public class PhotosActivity extends AppCompatActivity {
      */
     public void visualizePhoto() {
         Intent intent = new Intent(this, VisualizePhotoActivity.class);
-        intent.putExtra("imageUri", this.imageUri.toString());
+        intent.putExtra("imagePath", this.imageUri.getPath());
         startActivity(intent);
     }
-
-
-
 }

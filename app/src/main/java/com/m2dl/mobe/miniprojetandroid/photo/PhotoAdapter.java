@@ -2,7 +2,6 @@ package com.m2dl.mobe.miniprojetandroid.photo;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,6 +9,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by seb on 14/03/17.
@@ -17,20 +18,29 @@ import java.io.File;
 
 public class PhotoAdapter extends BaseAdapter {
 
+    /**
+     * Contexte dans lequel l'adapter est instanciée.
+     */
     private Context mContext;
 
-    public PhotoAdapter(Context c) {
+    /**
+     * Liste des Uris des images à afficher.
+     */
+    private List<File> data;
+
+    public PhotoAdapter(Context c, List<File> data) {
         this.mContext = c;
+        this.data = new ArrayList<>(data);
     }
 
     @Override
     public int getCount() {
-        return this.mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES).listFiles().length;
+        return this.data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return this.mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES).listFiles()[position];
+        return this.data.get(position);
     }
 
     @Override
@@ -61,7 +71,7 @@ public class PhotoAdapter extends BaseAdapter {
         }
 
         // Lancement de la tache asynchrone de redimensionnement des images.
-        new AsyncTaskRescaleImage(mContext).execute(holder);
+        new AsyncTaskRescaleImage(this.data.get(position).getAbsolutePath()).execute(holder);
 
         return imageView;
     }
@@ -75,5 +85,12 @@ public class PhotoAdapter extends BaseAdapter {
         return Uri.fromFile((File) getItem(position));
     }
 
-
+    /**
+     * Permet d'ajouter un fichier à la liste des fichiers de l'adapter.
+     * @param file Le fichier a ajouter
+     */
+    public void addItem(File file) {
+        this.data.add(file);
+        notifyDataSetChanged();
+    }
 }

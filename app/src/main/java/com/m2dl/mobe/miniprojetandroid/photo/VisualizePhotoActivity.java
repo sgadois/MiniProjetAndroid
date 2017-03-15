@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,9 +35,9 @@ public class VisualizePhotoActivity extends AppCompatActivity {
     private String criticite;
 
     /**
-     * Uri de la photo visualisé.
+     * Chemin de la photo visualisé.
      */
-    private Uri imageUri;
+    private String imagePath;
 
 
     @Override
@@ -44,13 +45,22 @@ public class VisualizePhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
 
+        ImageView imageView = (ImageView) findViewById(R.id.imagePhoto);
+        imageView.setImageBitmap(null);
+
         // Récupération de l'intent extra.
-        String extra = getIntent().getStringExtra("imageUri");
+        String extra = getIntent().getStringExtra("imagePath");
         if(extra != null) {
-            this.imageUri = Uri.parse(getIntent().getStringExtra("imageUri"));
-            ImageView imageView = (ImageView) findViewById(R.id.imagePhoto);
+            imagePath = getIntent().getStringExtra("imagePath");
             try {
-                Bitmap bitmap = android.provider.MediaStore.Images.Media.getBitmap(getContentResolver(), this.imageUri);
+                // Récupération de la taille de l'écran pour optimiser l'affichage de l'image.
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int height = displayMetrics.heightPixels;
+                int width = displayMetrics.widthPixels;
+
+                // Optimisation de l'espace mémoire occupé par l'image.
+                Bitmap bitmap = ImageRescaling.decodeSampledBitmapFromResource(imagePath, height, width);
                 imageView.setImageBitmap(bitmap);
             } catch (Exception e) {
                 Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
@@ -77,8 +87,6 @@ public class VisualizePhotoActivity extends AppCompatActivity {
         });
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -97,13 +105,16 @@ public class VisualizePhotoActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Permet d'uploader la photo sur firebase
+     */
     public void uploadPhoto() {
-        Uri file = Uri.fromFile(new File(this.imageUri.getPath()));
+        Uri file = Uri.fromFile(new File(this.imagePath));
         Login.getInstance().signIn("sgadois@gmail.com", "azerty", this);
 
         // Create a storage reference from our app
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());
-        riversRef.putFile(file);
+        StorageReference imagesRef = storageRef.child("images/"+file.getLastPathSegment());
+        imagesRef.putFile(file);
     }
 }
