@@ -1,5 +1,10 @@
 <resources>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="app_name">MiniProjetAndroid</string>
+    <string name="menu">Menu</string>
     <string name="fac">Ma Fac</string>
     <string name="cours">Mes Cours</string>
     <string name="config">Configuration</string>
@@ -17,5 +22,11 @@
         <item>Confort</item>
         <item>Problème</item>
         <item>Danger</item>
+    </string-array>
+
+    <string-array name="menu">
+        <item>Ma Fac</item>
+        <item>Mes Cours</item>
+        <item>Configuration</item>
     </string-array>
 </resources>
