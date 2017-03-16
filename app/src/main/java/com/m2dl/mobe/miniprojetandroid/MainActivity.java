@@ -2,7 +2,9 @@ package com.m2dl.mobe.miniprojetandroid;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -11,8 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.m2dl.mobe.miniprojetandroid.configuration.ConfigurationActivity;
 import com.m2dl.mobe.miniprojetandroid.emploidutemps.ScheduleActivity;
 import com.m2dl.mobe.miniprojetandroid.geolocalisation.GeolocalisationActivity;
+import com.m2dl.mobe.miniprojetandroid.login.Login;
 import com.m2dl.mobe.miniprojetandroid.occupationru.OccupationActivity;
 import com.m2dl.mobe.miniprojetandroid.qrcode.Qrcodescanner;
 import com.m2dl.mobe.miniprojetandroid.photo.PhotosActivity;
@@ -37,6 +41,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        SharedPreferences sharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        String email = sharedPrefs.getString("email", "");
+        String mdp = sharedPrefs.getString("password", "");
+
+        Login.getInstance().signIn(email, mdp, this);
     }
 
     @Override
@@ -63,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(this, Qrcodescanner.class));
                 return true;
             case R.id.config:
-                //TODO
+                startActivity(new Intent(this, ConfigurationActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

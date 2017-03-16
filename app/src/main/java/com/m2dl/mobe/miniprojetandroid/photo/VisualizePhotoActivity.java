@@ -133,7 +133,6 @@ public class VisualizePhotoActivity extends AppCompatActivity implements Locatio
             Toast.makeText(this, "Wait for location", Toast.LENGTH_SHORT).show();
         } else {
             Uri file = Uri.fromFile(new File(this.imagePath));
-            Login.getInstance().signIn("sgadois@gmail.com", "azerty", this);
 
             // Create a storage reference from our app
             StorageReference storageRef = FirebaseStorage.getInstance().getReference();
