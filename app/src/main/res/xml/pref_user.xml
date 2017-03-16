@@ -1,9 +1,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
-        android:defaultValue="@string/pref_default_username"
+        android:defaultValue="@string/pref_default_email"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/pref_title_username"
+        android:title="@string/pref_title_email"
         android:key="email" />
     <EditTextPreference
         android:defaultValue="@string/pref_default_password"
@@ -18,8 +18,5 @@
         android:singleLine="true"
         android:title="@string/pref_title_url"
         android:key="urlschedule" />
-    <!--<Preference>
-        <intent android:targetClass="com.m2dl.mobe.miniprojetandroid.configuration.ProfileActivity"/>
-    </Preference>-->
 
 </PreferenceScreen>

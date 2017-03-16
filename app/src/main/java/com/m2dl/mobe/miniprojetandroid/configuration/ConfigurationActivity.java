@@ -33,6 +33,7 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
+
 public class ConfigurationActivity extends AppCompatPreferenceActivity {
     /**
      * A preference value change listener that updates the preference's summary

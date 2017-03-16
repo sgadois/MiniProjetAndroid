@@ -19,7 +19,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(this);
         String url = sharedPrefs.getString("urlschedule","");
         if(url.isEmpty() || url.equals("http://example.com, http://mon-emploi-du-temps.fr")){
-            Toast.makeText(this, "URL inconnue, consultez vos configurations",
+            Toast.makeText(this, R.string.pref_error_url,
                     Toast.LENGTH_LONG).show();
         }
         else {
