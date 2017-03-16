@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -68,20 +69,26 @@ public class Qrcodescanner extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 String contents = data.getStringExtra("SCAN_RESULT");
-                if (contents == "ru1") {
-                    Log.d("SEARCH_EAN","I am here");
+                if (new String(contents).contains("ru1")) {
+                   // Log.d("SEARCH_EAN","I am here");
+                    //setContentView(R.layout.qrcode_main);
                     String format = data.getStringExtra("SCAN_RESULT_FORMAT");
-
+                    TextView tx = (TextView) findViewById(R.id.textView2);
+                    tx.setText(contents);
                     // Handle successful scan
 
+                    Intent intent= new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.google.com"));
+                    startActivity(intent);
 
-                    Intent myIntent1 = new Intent(Intent.ACTION_VIEW, Uri.parse(contents));
-                    startActivity(myIntent1);
+                    /*Intent myIntent1 = new Intent(Intent.ACTION_VIEW, Uri.parse(contents));
+                    startActivity(myIntent1);*/
                 }
             }
             if(resultCode == RESULT_CANCELED){
-                Log.d("SEARCH_EAN","bad scan");
-
+                //Log.d("SEARCH_EAN","bad scan");
+                //setContentView(R.layout.qrcode_main);
+                TextView tx = (TextView) findViewById(R.id.textView2);
+                tx.setText("bad scan");
                 //super.onActivityResult(requestCode, resultCode, data);
             }
         }else {
