@@ -73,20 +73,6 @@ public class OccupationRU {
                             arrayDP.add(new DataPoint(time, val));
                         }
                         Date d = new Date((long)( arrayDP.get(arrayDP.size() - 1).getX()*1000));
-                        /*if(d.getHours()<20){
-                            Date actual = new Date(d.getTime());
-                            for(int i = 0; actual.getHours() < 20; i++ ){
-                                switch(actual.getHours()){
-                                    case 12 :
-                                        arrayDP.add( new DataPoint(hoursDateFormat.parse("12:00"),200));
-                                    case 19 :
-                                        arrayDP.add( new DataPoint(hoursDateFormat.parse("19:00"),200));
-                                    case 20 :
-                                        arrayDP.add( new DataPoint(hoursDateFormat.parse("20:00"),100));
-                                }
-                                actual.setHours(actual.getHours()+1);
-                            }
-                        }*/
                         LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
                         for(int i=0; i< arrayDP.size();i++){
                             series.appendData(arrayDP.get(i),true,10);
@@ -96,9 +82,6 @@ public class OccupationRU {
 
 
                     }
-
-                    //graph.removeAllSeries();
-
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
