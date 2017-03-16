@@ -28,7 +28,12 @@ public class SeekBarSoundPreference extends SeekBarPreference {
             callChangeListener(Integer.valueOf(mSeekBar.getProgress()));
             ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_RING, Integer.valueOf(mSeekBar.getProgress())*ToneGenerator.MAX_VOLUME/Integer.valueOf(mSeekBar.getMax()));
             toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,200);
-            Settings.System.putFloat(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, (float) mValue);
+            //Settings.System.putFloat(mContext.getContentResolver(), Settings.System., (float) mValue);
+           /* AudioManager mgr=null;
+
+            mgr=(AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
+            mgr.setStreamVolume(AudioManager.STREAM_RING,mValue,AudioManager.MODE_CURRENT);*/
+
         }
 
         ((AlertDialog) getDialog()).dismiss();
