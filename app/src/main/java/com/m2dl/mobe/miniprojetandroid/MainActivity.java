@@ -42,12 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        SharedPreferences sharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(this);
-        String email = sharedPrefs.getString("email", "");
-        String mdp = sharedPrefs.getString("password", "");
 
-        Login.getInstance().signIn(email, mdp, this);
     }
 
     @Override

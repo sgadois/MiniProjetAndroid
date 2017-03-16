@@ -141,6 +141,9 @@ public class ConfigurationActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class UserSettingsFragment extends PreferenceFragment {
+        private String email = "";
+        private String password = "";
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -154,16 +157,6 @@ public class ConfigurationActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("email"));
             bindPreferenceSummaryToValue(findPreference("password"));
             bindPreferenceSummaryToValue(findPreference("urlschedule"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), ConfigurationActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
         }
     }
 

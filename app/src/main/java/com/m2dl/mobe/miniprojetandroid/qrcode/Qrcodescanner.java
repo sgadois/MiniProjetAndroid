@@ -9,7 +9,11 @@ import android.provider.MediaStore;
 import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -36,29 +40,30 @@ public class Qrcodescanner extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qrcode_main);
-        final Activity activity = this;
+        activateScan();
 
         // Initialisation des boutons.
-        Button btnTakePhoto = (Button) findViewById(R.id.buttonPhoto);
+       /* Button btnTakePhoto = (Button) findViewById(R.id.buttonPhoto);
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                /* Intent intent = new Intent("com.google.zxing.client.android.SCAN");
                 intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
                 intent.putExtra("SCAN_FORMATS", "CODABAR");
-                qrMoi.startActivityForResult(intent, 0);*/
-                IntentIntegrator integrator = new IntentIntegrator(activity);
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                integrator.addExtra("SCAN_MODE", "QR_CODE_MODE");
-                integrator.setPrompt("Qr Code Scan");
-                integrator.setCameraId(0);
-                integrator.setBeepEnabled(true);
-                integrator.initiateScan();
+                qrMoi.startActivityForResult(intent, 0);
+
             }
-        });
+        });*/
     }
 
-    public void activateScan(View v){
+    public void activateScan(){
 
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrator.addExtra("SCAN_MODE", "QR_CODE_MODE");
+        integrator.setPrompt("Qr Code Scan");
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(true);
+        integrator.initiateScan();
     }
 
     @Override
@@ -69,46 +74,45 @@ public class Qrcodescanner extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 String contents = data.getStringExtra("SCAN_RESULT");
-                if (new String(contents).contains("ru1")) {
-                   // Log.d("SEARCH_EAN","I am here");
-                    //setContentView(R.layout.qrcode_main);
-                    String format = data.getStringExtra("SCAN_RESULT_FORMAT");
-                    TextView tx = (TextView) findViewById(R.id.textView2);
-                    tx.setText(contents);
-                    // Handle successful scan
-
-                    Intent intent= new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.google.com"));
+                String format = data.getStringExtra("SCAN_RESULT_FORMAT");
+                TextView tx = (TextView) findViewById(R.id.textView2);
+                if(URLUtil.isValidUrl(contents)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(contents));
                     startActivity(intent);
+                    tx.setText(contents);
 
-                    /*Intent myIntent1 = new Intent(Intent.ACTION_VIEW, Uri.parse(contents));
-                    startActivity(myIntent1);*/
                 }
+                else{
+                    tx.setText(contents+" -> url invalid (doit contenir http://)");
+                }
+
             }
             if(resultCode == RESULT_CANCELED){
-                //Log.d("SEARCH_EAN","bad scan");
-                //setContentView(R.layout.qrcode_main);
                 TextView tx = (TextView) findViewById(R.id.textView2);
                 tx.setText("bad scan");
-                //super.onActivityResult(requestCode, resultCode, data);
+
             }
         }else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    /**
-     * Permet de lancer un intent avec result de prise de photo.
-     */
-    /*public void takePhoto() {
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        String photoName = "Pic_" +
-                getExternalFilesDir(Environment.DIRECTORY_PICTURES).listFiles().length +
-                ".jpg";
-        File photo = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), photoName);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_photos, menu);
+        return true;
+    }
 
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
-        imageUri = Uri.fromFile(photo);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_photo:
+                activateScan();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-    }*/
 }
