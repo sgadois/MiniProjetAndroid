@@ -24,7 +24,7 @@ public class SeekBarBrightnessPreference extends SeekBarPreference {
             persistInt(mSeekBar.getProgress());
             callChangeListener(Integer.valueOf(mSeekBar.getProgress()));
 
-            Settings.System.putFloat(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, (float) mValue);
+            //Settings.System.putFloat(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, (float) mValue);
         }
 
         ((AlertDialog) getDialog()).dismiss();
