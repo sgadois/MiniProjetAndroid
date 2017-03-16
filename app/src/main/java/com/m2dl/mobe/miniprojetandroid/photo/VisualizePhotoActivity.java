@@ -2,6 +2,7 @@ package com.m2dl.mobe.miniprojetandroid.photo;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -9,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -133,7 +135,13 @@ public class VisualizePhotoActivity extends AppCompatActivity implements Locatio
             Toast.makeText(this, "Wait for location", Toast.LENGTH_SHORT).show();
         } else {
             Uri file = Uri.fromFile(new File(this.imagePath));
-            Login.getInstance().signIn("sgadois@gmail.com", "azerty", this);
+
+            SharedPreferences sharedPrefs = PreferenceManager
+                    .getDefaultSharedPreferences(this);
+            String email = sharedPrefs.getString("email", "");
+            String mdp = sharedPrefs.getString("password", "");
+
+            Login.getInstance().signIn(email, mdp, this);
 
             // Create a storage reference from our app
             StorageReference storageRef = FirebaseStorage.getInstance().getReference();

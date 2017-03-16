@@ -1,0 +1,18 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <com.m2dl.mobe.miniprojetandroid.configuration.SeekBarBrightnessPreference
+        android:defaultValue="50"
+        android:key="SEEKBAR_VALUE"
+        android:max="100"
+        android:text="@string/settings_unit"
+        android:title="@string/pref_title_brightness" />
+
+    <com.m2dl.mobe.miniprojetandroid.configuration.SeekBarSoundPreference
+        android:defaultValue="50"
+        android:key="SEEKBAR_VALUE"
+        android:max="100"
+        android:text="@string/settings_unit"
+        android:title="@string/pref_title_sound" />
+
+</PreferenceScreen>

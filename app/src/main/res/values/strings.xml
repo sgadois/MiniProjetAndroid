@@ -29,4 +29,30 @@
         <item>Mes Cours</item>
         <item>Configuration</item>
     </string-array>
+
+    <!-- User settings -->
+    <string name="pref_header_user">Paramètres utilisateur</string>
+    <string name="pref_header_system">Paramètres système</string>
+
+    <string name="pref_title_username">Email</string>
+    <string name="pref_default_username">example@email.com</string>
+
+    <string name="pref_title_password">Mot de passe</string>
+    <string name="pref_default_password">*******</string>
+
+    <string name="pref_title_url">URL emploi du temps</string>
+    <string name="pref_default_url">http://example.com, http://mon-emploi-du-temps.fr</string>
+
+    <!-- Settings for Brightness -->
+    <string name="pref_title_brightness">Luminosité</string>
+    <string name="pref_default_brightness">100</string>
+
+    <!-- Settings for Sound -->
+    <string name="pref_title_sound">Son</string>
+    <string name="pref_default_sound">100</string>
+
+
+    <string name="menu_settings">Settings</string>
+    <string name="settings_unit"></string>
+    <string name="settings_title">Here comes the title</string>
 </resources>

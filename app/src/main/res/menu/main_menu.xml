@@ -18,10 +18,10 @@
                 android:id="@+id/qrcode"/>
             <item android:id="@+id/schedule"
                 android:title="@string/schedule"/>
-            <item android:id="@+id/infos"
-                android:title="@string/infos"/>
+
         </menu>
     </item>
     <item android:id="@+id/config"
-        android:title="@string/config" />
+        android:title="@string/config">
+    </item>
 </menu>

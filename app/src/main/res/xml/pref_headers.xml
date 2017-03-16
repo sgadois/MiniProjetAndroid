@@ -1,0 +1,14 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="com.m2dl.mobe.miniprojetandroid.configuration.ConfigurationActivity$UserSettingsFragment"
+        android:title="@string/pref_header_user" />
+
+    <header
+        android:fragment="com.m2dl.mobe.miniprojetandroid.configuration.ConfigurationActivity$SystemSettingsFragment"
+
+        android:title="@string/pref_header_system" />
+
+</preference-headers>
