@@ -4,6 +4,12 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_username"
+        android:key="username" />
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_email"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_email"
         android:key="email" />
     <EditTextPreference
         android:defaultValue="@string/pref_default_password"
