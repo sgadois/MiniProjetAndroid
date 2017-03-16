@@ -3,6 +3,7 @@ package com.m2dl.mobe.miniprojetandroid.login;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,6 +38,11 @@ public class Login {
     private static Login instance = null;
 
     /**
+     *  L'uid de l'utilisateur connecté.
+     */
+    private static String userUid;
+
+    /**
      * Constructeur.
      */
     private Login() {
@@ -62,19 +68,21 @@ public class Login {
      * @param password Le mot de passe de l'utilisateur.
      * @param activity L'Activity dans lequel la méthode est utilisée.
      */
-    public void signIn(String email, String password, Activity activity) {
+    public void signIn(String email, String password, final Activity activity) {
         if(!email.isEmpty() && !password.isEmpty()){
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                            Toast.makeText(activity, "Authentification réussie ", Toast.LENGTH_SHORT).show();
+                            userUid = task.getResult().getUser().getUid();
 
                             // If sign in fails, display a message to the user. If sign in succeeds
                             // the auth state listener will be notified and logic to handle the
                             // signed in user can be handled in the listener.
                             if (!task.isSuccessful()) {
-                                Log.w(TAG, "signInWithEmail:failed", task.getException());
+                                userUid = null;
+                                Toast.makeText(activity, "Authentification échouée", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -86,7 +94,7 @@ public class Login {
      * @return String l'id.
      */
     public String getTokenId() {
-        return mAuth.getCurrentUser().getUid();
+        return userUid;
     }
 
     /**

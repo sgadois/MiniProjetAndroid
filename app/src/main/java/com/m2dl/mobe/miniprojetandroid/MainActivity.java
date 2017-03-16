@@ -18,8 +18,8 @@ import com.m2dl.mobe.miniprojetandroid.emploidutemps.ScheduleActivity;
 import com.m2dl.mobe.miniprojetandroid.geolocalisation.GeolocalisationActivity;
 import com.m2dl.mobe.miniprojetandroid.login.Login;
 import com.m2dl.mobe.miniprojetandroid.occupationru.OccupationActivity;
-import com.m2dl.mobe.miniprojetandroid.qrcode.Qrcodescanner;
 import com.m2dl.mobe.miniprojetandroid.photo.PhotosActivity;
+import com.m2dl.mobe.miniprojetandroid.qrcode.Qrcodescanner;
 
 
 
@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -42,7 +44,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String email = sharedPrefs.getString("email", "");
+        String mdp = sharedPrefs.getString("password", "");
 
+        Login.getInstance().signIn(email, mdp, this);
     }
 
     @Override
