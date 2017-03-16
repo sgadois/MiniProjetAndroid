@@ -25,14 +25,14 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/logo_mdl"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp"
             android:id="@+id/logomdl" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            app:srcCompat="@drawable/logoapp"
+            android:layout_below="@+id/logomdl"
+            app:srcCompat="@drawable/full_logo"
             android:layout_alignParentTop="true"
             android:layout_marginTop="50dp"
             android:id="@+id/fulllogo" />
