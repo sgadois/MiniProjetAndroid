@@ -7,12 +7,8 @@
         android:title="@string/pref_header_user" />
 
     <header
-        android:fragment="com.m2dl.mobe.miniprojetandroid.configuration.ConfigurationActivity$SoundPreferenceFragment"
+        android:fragment="com.m2dl.mobe.miniprojetandroid.configuration.ConfigurationActivity$SystemSettingsFragment"
 
-        android:title="@string/pref_header_sound" />
-
-    <header
-        android:fragment="com.m2dl.mobe.miniprojetandroid.configuration.ConfigurationActivity$BrightnessPreferenceFragment"
-        android:title="@string/pref_header_brightness" />
+        android:title="@string/pref_header_system" />
 
 </preference-headers>
