@@ -6,14 +6,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scan QRcode"
+        android:text="Résultat du Scan QRcode"
         android:id="@+id/textView" />
 
-    <Button
-        android:text="Lancer QrCode Scan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonPhoto" />
+
 
     <TextView
         android:text=""
