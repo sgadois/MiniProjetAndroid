@@ -4,6 +4,7 @@ package com.m2dl.mobe.miniprojetandroid.configuration;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -18,10 +19,14 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
+import com.m2dl.mobe.miniprojetandroid.MainActivity;
 import com.m2dl.mobe.miniprojetandroid.R;
+import com.m2dl.mobe.miniprojetandroid.login.Login;
 
 import java.util.List;
 
@@ -160,6 +165,9 @@ public class ConfigurationActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class UserSettingsFragment extends PreferenceFragment {
+        private String email = "";
+        private String password = "";
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -173,16 +181,6 @@ public class ConfigurationActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("email"));
             bindPreferenceSummaryToValue(findPreference("password"));
             bindPreferenceSummaryToValue(findPreference("urlschedule"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), ConfigurationActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -233,7 +231,6 @@ public class ConfigurationActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("Luminosité"));
-            startActivity(new Intent(getActivity(), ProfileActivity.class));
         }
 
         @Override
